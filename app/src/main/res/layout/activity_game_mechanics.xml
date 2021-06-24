@@ -2,30 +2,33 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tvQuestion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
     tools:context=".GameMechanics">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Question"
+        android:layout_marginBottom="220dp"
+        android:text="@string/question"
+        android:textColor="#000000"
+        android:textFontWeight="600"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnAnswer1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:text="Answer 1"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="@+id/tvQuestion"
+        app:layout_constraintStart_toStartOf="@+id/tvQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
 
     <Button
         android:id="@+id/btnAnswer2"
@@ -38,8 +41,8 @@
 
     <Button
         android:id="@+id/btnAnswer3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:text="Answer 3"
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer2"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer2"
@@ -47,10 +50,11 @@
 
     <Button
         android:id="@+id/btnAnswer4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:text="Answer 4"
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer3"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer3"
         app:layout_constraintTop_toBottomOf="@+id/btnAnswer3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

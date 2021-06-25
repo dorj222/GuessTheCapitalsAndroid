@@ -36,35 +36,43 @@ class GameMechanics : AppCompatActivity() {
                 val responseResult = response.body()!!
                 val resultList = randomSequenceGenerator()
 
-                val country1 = responseResult[resultList[0]]
-                val country2 = responseResult[resultList[1]]
-                val country3 = responseResult[resultList[2]]
-                val country4 = responseResult[resultList[3]]
-
-                val textView = findViewById<TextView>(R.id.tvQuestion2)
-                textView.text = country1.name
-
-                val button1 = findViewById<Button>(R.id.btnAnswer1)
-                button1.text = country1.capital
-
-                val button2 = findViewById<Button>(R.id.btnAnswer2)
-                button2.text = country2.capital
-
-                val button3 = findViewById<Button>(R.id.btnAnswer3)
-                button3.text = country3.capital
-
-                val button4 = findViewById<Button>(R.id.btnAnswer4)
-                button4.text = country4.capital
-
-
-                Log.d("tag5", country1.capital)
-
+                displayQuestionAnswer(responseResult, resultList)
             }
 
             override fun onFailure(call: Call<List<countryDataItem>?>, t: Throwable) {
 
             }
         })
+    }
+
+    private fun displayQuestionAnswer(
+        responseResult: List<countryDataItem>,
+        resultList: MutableList<Int>
+    ) {
+        val country1 = responseResult[resultList[0]]
+        val country2 = responseResult[resultList[1]]
+        val country3 = responseResult[resultList[2]]
+        val country4 = responseResult[resultList[3]]
+
+        val textView = findViewById<TextView>(R.id.tvQuestion2)
+
+        val randomNumber = (0..3).random()
+
+        textView.text =  responseResult[resultList[randomNumber]].name
+
+        val button1 = findViewById<Button>(R.id.btnAnswer1)
+        button1.text = country1.capital
+
+        val button2 = findViewById<Button>(R.id.btnAnswer2)
+        button2.text = country2.capital
+
+        val button3 = findViewById<Button>(R.id.btnAnswer3)
+        button3.text = country3.capital
+
+        val button4 = findViewById<Button>(R.id.btnAnswer4)
+        button4.text = country4.capital
+
+        Log.d("tag5", country1.capital)
     }
 
     private fun randomSequenceGenerator(): MutableList<Int> {

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tvQuestion2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
@@ -21,20 +22,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnAnswer1"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Answer 1"
+    <TextView
+        android:id="@+id/tvQuestion2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"
+        android:textFontWeight="600"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/tvQuestion"
         app:layout_constraintStart_toStartOf="@+id/tvQuestion"
         app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
 
     <Button
+        android:id="@+id/btnAnswer1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="9dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/tvQuestion2"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/tvQuestion2"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestion2" />
+
+    <Button
         android:id="@+id/btnAnswer2"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:text="Answer 2"
+        android:text=""
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer1"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer1"
         app:layout_constraintTop_toBottomOf="@+id/btnAnswer1" />
@@ -43,7 +58,7 @@
         android:id="@+id/btnAnswer3"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:text="Answer 3"
+        android:text=""
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer2"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer2"
         app:layout_constraintTop_toBottomOf="@+id/btnAnswer2" />
@@ -52,9 +67,11 @@
         android:id="@+id/btnAnswer4"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:text="Answer 4"
+        android:text=""
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer3"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer3"
         app:layout_constraintTop_toBottomOf="@+id/btnAnswer3" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

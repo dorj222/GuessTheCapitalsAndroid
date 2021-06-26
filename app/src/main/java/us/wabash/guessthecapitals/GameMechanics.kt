@@ -2,14 +2,19 @@ package us.wabash.guessthecapitals
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import us.wabash.guessthecapitals.API.CountryAPI
 import us.wabash.guessthecapitals.data.countryDataItem
+import java.util.*
+import kotlin.collections.ArrayList
 
 const val baseURL = "https://restcountries.eu/"
 val countriesList = mutableListOf<Int>()
@@ -45,34 +50,53 @@ class GameMechanics : AppCompatActivity() {
         })
     }
 
-    private fun displayQuestionAnswer(
-        responseResult: List<countryDataItem>,
-        resultList: MutableList<Int>
+    private fun displayQuestionAnswer(responseResult: List<countryDataItem>,
+                                      resultList: MutableList<Int>
     ) {
-        val country1 = responseResult[resultList[0]]
-        val country2 = responseResult[resultList[1]]
-        val country3 = responseResult[resultList[2]]
-        val country4 = responseResult[resultList[3]]
 
+        val (countries, buttons) = setArrays(responseResult, resultList)
         val textView = findViewById<TextView>(R.id.tvQuestion2)
 
+        //randomly select a question
         val randomNumber = (0..3).random()
+        val randomlySelectedCountry = responseResult[resultList[randomNumber]].capital
+//        var userGuessedCountry: String
 
-        textView.text =  responseResult[resultList[randomNumber]].name
+        textView.text = "$randomlySelectedCountry?"
 
-        val button1 = findViewById<Button>(R.id.btnAnswer1)
-        button1.text = country1.capital
+        for (i in buttons.indices) {
+            buttons[i].setText(countries[i].name)
+            buttons[i].setOnClickListener {
+            val userGuessedCountry = countries[i].capital
 
-        val button2 = findViewById<Button>(R.id.btnAnswer2)
-        button2.text = country2.capital
+                if(userGuessedCountry == randomlySelectedCountry){
+                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
-        val button3 = findViewById<Button>(R.id.btnAnswer3)
-        button3.text = country3.capital
+    private fun setArrays(
+        responseResult: List<countryDataItem>,
+        resultList: MutableList<Int>
+    ): Pair<ArrayList<countryDataItem>, ArrayList<Button>> {
 
-        val button4 = findViewById<Button>(R.id.btnAnswer4)
-        button4.text = country4.capital
+        val countries = arrayListOf<countryDataItem>(
+            responseResult[resultList[0]],
+            responseResult[resultList[1]],
+            responseResult[resultList[2]],
+            responseResult[resultList[3]]
+        )
 
-        Log.d("tag5", country1.capital)
+        val buttons = arrayListOf<Button>(
+            findViewById<Button>(R.id.btnAnswer1),
+            findViewById<Button>(R.id.btnAnswer2),
+            findViewById<Button>(R.id.btnAnswer3),
+            findViewById<Button>(R.id.btnAnswer4)
+        )
+        return Pair(countries, buttons)
     }
 
     private fun randomSequenceGenerator(): MutableList<Int> {
@@ -94,4 +118,6 @@ class GameMechanics : AppCompatActivity() {
             isUniqueNumber(responseList)
         }
     }
+
 }
+

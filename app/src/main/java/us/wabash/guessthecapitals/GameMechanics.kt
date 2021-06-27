@@ -1,7 +1,6 @@
 package us.wabash.guessthecapitals
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -14,11 +13,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import us.wabash.guessthecapitals.API.CountryAPI
 import us.wabash.guessthecapitals.data.countryDataItem
-import java.util.*
 import kotlin.collections.ArrayList
 
 const val baseURL = "https://restcountries.eu/"
-val countriesList = mutableListOf<Int>()
+var countriesList = mutableListOf<Int>()
+
 
 class GameMechanics : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +39,10 @@ class GameMechanics : AppCompatActivity() {
             ) {
                 val responseResult = response.body()!!
 
-
                 displayQuestionAnswer(responseResult)
             }
 
             override fun onFailure(call: Call<List<countryDataItem>?>, t: Throwable) {
-
             }
         })
     }
@@ -54,18 +51,14 @@ class GameMechanics : AppCompatActivity() {
 
         val resultList = randomSequenceGenerator()
         val (countries, buttons) = setArrays(responseResult, resultList)
-        val textView = findViewById<TextView>(R.id.tvQuestion2)
-        val btnNext = findViewById<TextView>(R.id.btnNext)
-        val btnRetry = findViewById<TextView>(R.id.btnRetry)
-        btnNext.setVisibility(View.INVISIBLE)
-        btnRetry.setVisibility(View.INVISIBLE)
+
+        //get and create buttons
+        val (textView, btnNext, btnRetry) = getButtons()
+        val tvAnswerStreak = findViewById<TextView>(R.id.tvAnswerStreak)
+        tvAnswerStreak.setText("")
 
         //randomly select a question
-        val randomNumber = (0..3).random()
-        val randomlySelectedCountry = responseResult[resultList[randomNumber]].capital
-//        var userGuessedCountry: String
-
-        textView.text = "$randomlySelectedCountry?"
+        val randomlySelectedCountry = randomlySelectQuestion(responseResult, resultList, textView)
 
         for (i in buttons.indices) {
             buttons[i].setText(countries[i].name)
@@ -74,26 +67,65 @@ class GameMechanics : AppCompatActivity() {
 
                 if(userGuessedCountry == randomlySelectedCountry){
                     Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-                    btnNext.setVisibility(View.VISIBLE)
-                    btnRetry.setVisibility(View.INVISIBLE)
-
-                    btnNext.setOnClickListener {
-                        btnNext.setVisibility(View.INVISIBLE)
-                        displayQuestionAnswer(responseResult)
-                    }
-
+                    guessedCorrectly(btnNext, btnRetry, responseResult, tvAnswerStreak)
 
                 } else{
                     Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show()
-                    btnNext.setVisibility(View.INVISIBLE)
-                    btnRetry.setVisibility(View.VISIBLE)
-
-                    btnRetry.setOnClickListener {
-                        displayQuestionAnswer(responseResult)
-                    }
-
+                    guessedIncorrectly(btnNext, btnRetry, responseResult, tvAnswerStreak)
                 }
             }
+        }
+    }
+
+    private fun randomlySelectQuestion(
+        responseResult: List<countryDataItem>,
+        resultList: MutableList<Int>,
+        textView: TextView
+    ): String {
+        val randomNumber = (0..3).random()
+        val randomlySelectedCountry = responseResult[resultList[randomNumber]].capital
+        textView.text = "$randomlySelectedCountry?"
+        return randomlySelectedCountry
+    }
+
+    private fun getButtons(): Triple<TextView, TextView, TextView> {
+        val textView = findViewById<TextView>(R.id.tvQuestion2)
+        val btnNext = findViewById<TextView>(R.id.btnNext)
+        val btnRetry = findViewById<TextView>(R.id.btnRetry)
+        btnNext.setVisibility(View.INVISIBLE)
+        btnRetry.setVisibility(View.INVISIBLE)
+        return Triple(textView, btnNext, btnRetry)
+    }
+
+    private fun guessedIncorrectly(
+        btnNext: TextView,
+        btnRetry: TextView,
+        responseResult: List<countryDataItem>,
+        tvAnswerStreak: TextView
+    ) {
+        val answerStreak = countriesList.size/4 -1
+        countriesList.clear()
+        tvAnswerStreak.text = "Correctly Answered: " + answerStreak.toString()
+        btnNext.setVisibility(View.INVISIBLE)
+        btnRetry.setVisibility(View.VISIBLE)
+        btnRetry.setOnClickListener {
+            displayQuestionAnswer(responseResult)
+        }
+    }
+
+    private fun guessedCorrectly(
+        btnNext: TextView,
+        btnRetry: TextView,
+        responseResult: List<countryDataItem>,
+        tvAnswerStreak: TextView
+    ) {
+        val answerStreak = countriesList.size/4
+        tvAnswerStreak.setText("Answer Streak $answerStreak")
+        btnNext.setVisibility(View.VISIBLE)
+        btnRetry.setVisibility(View.INVISIBLE)
+        btnNext.setOnClickListener {
+            btnNext.setVisibility(View.INVISIBLE)
+            displayQuestionAnswer(responseResult)
         }
     }
 

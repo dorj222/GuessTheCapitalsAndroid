@@ -1,5 +1,6 @@
 package us.wabash.guessthecapitals
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -61,12 +62,15 @@ class GameMechanics : AppCompatActivity() {
         tvAnswerStreak.setText("")
 
         //randomly select a question
-        val randomlySelectedCountry = randomlySelectQuestion(responseResult, resultList, tvQuestion2)
+        val randomNumber = (0..3).random()
+        val randomlySelectedCountry = randomlySelectQuestion(responseResult, resultList, tvQuestion2, randomNumber)
 
         for (i in buttons.indices) {
             buttons[i].setText(countries[i].name)
             buttons[i].setOnClickListener {
-            val userGuessedCountry = countries[i].capital
+                colorButtons(buttons, randomNumber)
+                val userGuessedCountry = countries[i].capital
+
                 if(userGuessedCountry == randomlySelectedCountry){
                     Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
                     guessedCorrectly(btnNext, buttons, btnRetry, responseResult, tvAnswerStreak)
@@ -79,12 +83,26 @@ class GameMechanics : AppCompatActivity() {
         }
     }
 
+    private fun colorButtons(
+        buttons: ArrayList<Button>,
+        randomNumber: Int
+    ) {
+        for(i in buttons.indices){
+            if(randomNumber==i){
+                buttons[i].setBackgroundColor(Color.parseColor("#148F77"))
+            }else{
+                buttons[i].setBackgroundColor(Color.parseColor("#E6B0AA"))
+            }
+        }
+    }
+
     private fun randomlySelectQuestion(
         responseResult: List<countryDataItem>,
         resultList: MutableList<Int>,
-        tvQuestion2: TextView
+        tvQuestion2: TextView,
+        randomNumber: Int
     ): String {
-        val randomNumber = (0..3).random()
+
         val randomlySelectedCountry = responseResult[resultList[randomNumber]].capital
         val tvQuestion = findViewById<TextView>(R.id.tvQuestion)
         tvQuestion.text = "WHICH COUNTRY'S CAPITAL"
@@ -149,6 +167,7 @@ class GameMechanics : AppCompatActivity() {
     private fun enableButtons(buttons: ArrayList<Button>) {
         for (i in buttons.indices) {
             buttons[i].isEnabled = true
+            buttons[i].setBackgroundColor(Color.parseColor("#F6C6EA"))
         }
     }
 

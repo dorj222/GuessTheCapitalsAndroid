@@ -5,7 +5,7 @@
     android:id="@+id/gameMechanics"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
+    android:background="#CDF0EA"
     tools:context=".GameMechanics">
 
     <TextView
@@ -13,10 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
-        android:text="@string/question"
         android:textColor="#000000"
-        android:textFontWeight="600"
-        android:textSize="18sp"
+        android:textFontWeight="1200"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-        android:textFontWeight="600"
+        android:textFontWeight="1200"
+        android:textAllCaps="true"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="@+id/tvQuestion"
         app:layout_constraintStart_toStartOf="@+id/tvQuestion"
@@ -36,6 +36,9 @@
         android:id="@+id/btnAnswer1"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#F6C6EA"
+        android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/tvQuestion2" />
@@ -44,6 +47,8 @@
         android:id="@+id/btnAnswer2"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:textColor="#000000"
+        android:backgroundTint="#F6C6EA"
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer1"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer1"
         app:layout_constraintTop_toBottomOf="@+id/btnAnswer1" />
@@ -51,7 +56,9 @@
     <Button
         android:id="@+id/btnAnswer3"
         android:layout_width="wrap_content"
+        android:backgroundTint="#F6C6EA"
         android:layout_height="40dp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer2"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer2"
         app:layout_constraintTop_toBottomOf="@+id/btnAnswer2" />
@@ -59,6 +66,8 @@
     <Button
         android:id="@+id/btnAnswer4"
         android:layout_width="wrap_content"
+        android:backgroundTint="#F6C6EA"
+        android:textColor="#000000"
         android:layout_height="40dp"
         app:layout_constraintEnd_toEndOf="@+id/btnAnswer3"
         app:layout_constraintStart_toStartOf="@+id/btnAnswer3"
@@ -69,6 +78,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:textColor="#000000"
+        android:backgroundTint="#F6C6EA"
         android:text="Next"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +92,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:textColor="#000000"
         android:text="Retry"
+        android:backgroundTint="#F6C6EA"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/btnNext"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"

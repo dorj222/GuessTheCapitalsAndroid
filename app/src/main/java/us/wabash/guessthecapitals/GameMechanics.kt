@@ -52,26 +52,28 @@ class GameMechanics : AppCompatActivity() {
         val resultList = randomSequenceGenerator()
         val (countries, buttons) = setArrays(responseResult, resultList)
 
+        //enable buttons
+        enableButtons(buttons)
+
         //get and create buttons
-        val (textView, btnNext, btnRetry) = getButtons()
+        val (tvQuestion2, btnNext, btnRetry) = getButtons()
         val tvAnswerStreak = findViewById<TextView>(R.id.tvAnswerStreak)
         tvAnswerStreak.setText("")
 
         //randomly select a question
-        val randomlySelectedCountry = randomlySelectQuestion(responseResult, resultList, textView)
+        val randomlySelectedCountry = randomlySelectQuestion(responseResult, resultList, tvQuestion2)
 
         for (i in buttons.indices) {
             buttons[i].setText(countries[i].name)
             buttons[i].setOnClickListener {
             val userGuessedCountry = countries[i].capital
-
                 if(userGuessedCountry == randomlySelectedCountry){
                     Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-                    guessedCorrectly(btnNext, btnRetry, responseResult, tvAnswerStreak)
+                    guessedCorrectly(btnNext, buttons, btnRetry, responseResult, tvAnswerStreak)
 
                 } else{
                     Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show()
-                    guessedIncorrectly(btnNext, btnRetry, responseResult, tvAnswerStreak)
+                    guessedIncorrectly(btnNext, buttons,btnRetry, responseResult, tvAnswerStreak)
                 }
             }
         }
@@ -80,25 +82,29 @@ class GameMechanics : AppCompatActivity() {
     private fun randomlySelectQuestion(
         responseResult: List<countryDataItem>,
         resultList: MutableList<Int>,
-        textView: TextView
+        tvQuestion2: TextView
     ): String {
         val randomNumber = (0..3).random()
         val randomlySelectedCountry = responseResult[resultList[randomNumber]].capital
-        textView.text = "$randomlySelectedCountry?"
+        val tvQuestion = findViewById<TextView>(R.id.tvQuestion)
+        tvQuestion.text = "WHICH COUNTRY'S CAPITAL"
+        tvQuestion2.text = "CITY IS NAMED $randomlySelectedCountry?"
+
         return randomlySelectedCountry
     }
 
     private fun getButtons(): Triple<TextView, TextView, TextView> {
-        val textView = findViewById<TextView>(R.id.tvQuestion2)
+        val tvQuestion2 = findViewById<TextView>(R.id.tvQuestion2)
         val btnNext = findViewById<TextView>(R.id.btnNext)
         val btnRetry = findViewById<TextView>(R.id.btnRetry)
         btnNext.setVisibility(View.INVISIBLE)
         btnRetry.setVisibility(View.INVISIBLE)
-        return Triple(textView, btnNext, btnRetry)
+        return Triple(tvQuestion2, btnNext, btnRetry)
     }
 
     private fun guessedIncorrectly(
         btnNext: TextView,
+        buttons: ArrayList<Button>,
         btnRetry: TextView,
         responseResult: List<countryDataItem>,
         tvAnswerStreak: TextView
@@ -106,6 +112,8 @@ class GameMechanics : AppCompatActivity() {
         val answerStreak = countriesList.size/4 -1
         countriesList.clear()
         tvAnswerStreak.text = "Correctly Answered: " + answerStreak.toString()
+
+        disableButtons(buttons)
         btnNext.setVisibility(View.INVISIBLE)
         btnRetry.setVisibility(View.VISIBLE)
         btnRetry.setOnClickListener {
@@ -115,17 +123,32 @@ class GameMechanics : AppCompatActivity() {
 
     private fun guessedCorrectly(
         btnNext: TextView,
+        buttons: ArrayList<Button>,
         btnRetry: TextView,
         responseResult: List<countryDataItem>,
         tvAnswerStreak: TextView
     ) {
+
         val answerStreak = countriesList.size/4
         tvAnswerStreak.setText("Answer Streak $answerStreak")
+        disableButtons(buttons)
         btnNext.setVisibility(View.VISIBLE)
         btnRetry.setVisibility(View.INVISIBLE)
         btnNext.setOnClickListener {
             btnNext.setVisibility(View.INVISIBLE)
             displayQuestionAnswer(responseResult)
+        }
+    }
+
+    private fun disableButtons(buttons: ArrayList<Button>) {
+        for (i in buttons.indices) {
+            buttons[i].isEnabled = false
+        }
+    }
+
+    private fun enableButtons(buttons: ArrayList<Button>) {
+        for (i in buttons.indices) {
+            buttons[i].isEnabled = true
         }
     }
 

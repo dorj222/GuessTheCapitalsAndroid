@@ -2,6 +2,7 @@ package us.wabash.guessthecapitals
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -18,7 +19,6 @@ import kotlin.collections.ArrayList
 
 const val baseURL = "https://restcountries.eu/"
 val countriesList = mutableListOf<Int>()
-
 
 class GameMechanics : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +39,9 @@ class GameMechanics : AppCompatActivity() {
                 response: Response<List<countryDataItem>?>
             ) {
                 val responseResult = response.body()!!
-                val resultList = randomSequenceGenerator()
 
-                displayQuestionAnswer(responseResult, resultList)
+
+                displayQuestionAnswer(responseResult)
             }
 
             override fun onFailure(call: Call<List<countryDataItem>?>, t: Throwable) {
@@ -50,12 +50,15 @@ class GameMechanics : AppCompatActivity() {
         })
     }
 
-    private fun displayQuestionAnswer(responseResult: List<countryDataItem>,
-                                      resultList: MutableList<Int>
-    ) {
+    private fun displayQuestionAnswer(responseResult: List<countryDataItem>) {
 
+        val resultList = randomSequenceGenerator()
         val (countries, buttons) = setArrays(responseResult, resultList)
         val textView = findViewById<TextView>(R.id.tvQuestion2)
+        val btnNext = findViewById<TextView>(R.id.btnNext)
+        val btnRetry = findViewById<TextView>(R.id.btnRetry)
+        btnNext.setVisibility(View.INVISIBLE)
+        btnRetry.setVisibility(View.INVISIBLE)
 
         //randomly select a question
         val randomNumber = (0..3).random()
@@ -71,8 +74,24 @@ class GameMechanics : AppCompatActivity() {
 
                 if(userGuessedCountry == randomlySelectedCountry){
                     Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
+                    btnNext.setVisibility(View.VISIBLE)
+                    btnRetry.setVisibility(View.INVISIBLE)
+
+                    btnNext.setOnClickListener {
+                        btnNext.setVisibility(View.INVISIBLE)
+                        displayQuestionAnswer(responseResult)
+                    }
+
+
                 } else{
                     Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show()
+                    btnNext.setVisibility(View.INVISIBLE)
+                    btnRetry.setVisibility(View.VISIBLE)
+
+                    btnRetry.setOnClickListener {
+                        displayQuestionAnswer(responseResult)
+                    }
+
                 }
             }
         }

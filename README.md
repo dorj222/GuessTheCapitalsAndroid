@@ -8,3 +8,11 @@ This android game challenges one to remember every capital city; the rule of thi
 Built with
 
 Android Studio, Kotlin, and API from http://restcountries.eu/.
+
+Screentshots from the application while it's running:
+
+<img src="https://i.imgur.com/glacVn4.png" alt="Home Screen"/>
+<img src="https://i.imgur.com/SEW71uN.png" alt="Game Screen #1"/>
+<img src="https://i.imgur.com/ANKJj4Q.png" alt="Game Screen #2"/>
+<img src="https://i.imgur.com/pBPwrnM.png" alt="Game Screen #2"/>
+

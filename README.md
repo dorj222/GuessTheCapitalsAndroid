@@ -1,5 +1,5 @@
 # GuessTheCapitalsAndroid
-An android game where a player can guess the capital cities.
+An Android game where a player can guess the capital cities.
 
 Description
 

@@ -48,6 +48,11 @@ class GameMechanics : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        countriesList.clear()
+    }
+
     private fun displayQuestionAnswer(responseResult: List<countryDataItem>) {
 
         val resultList = randomSequenceGenerator()

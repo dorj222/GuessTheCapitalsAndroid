@@ -1,13 +1,13 @@
 # GuessTheCapitalsAndroid
-An Android game where a player can guess the capital cities.
+An Android game where a player learn more about capital cities around the world.
 
 Description
 
-This android game challenges one to remember every capital city; the rule of this game is to pick the correct country name for each capital cities. In this game, a player can guess up to 200 capital cities. This game allows one to learn capital cities around the world in an interactive way. 
+This an educational Android game that aims to help one to improve their geography knowledge and learn capital cities around the world. In this game, a player will be asked to pick the correct country name for capital cities around the world. Each question will have 4 answers; 1 correct and 3 incorrect answers. A player will be able to see how many questions they have answered correctly in a row, and this feature will help them to perform better. 
 
 Built with
 
-Android Studio, Kotlin, and API from http://restcountries.eu/.
+Android Studio, Kotlin, Retrofit Library and API from http://restcountries.eu/.
 
 A short demo video:
 

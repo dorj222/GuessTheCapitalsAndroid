@@ -40,7 +40,7 @@ class GameMechanics : AppCompatActivity() {
             ) {
                 val responseResult = response.body()!!
 
-                displayQuestionAnswer(responseResult)
+                startTheGame(responseResult)
             }
 
             override fun onFailure(call: Call<List<countryDataItem>?>, t: Throwable) {
@@ -53,7 +53,7 @@ class GameMechanics : AppCompatActivity() {
         countriesList.clear()
     }
 
-    private fun displayQuestionAnswer(responseResult: List<countryDataItem>) {
+    private fun startTheGame(responseResult: List<countryDataItem>) {
 
         val resultList = randomSequenceGenerator()
         val (countries, buttons) = setArrays(responseResult, resultList)
@@ -66,7 +66,7 @@ class GameMechanics : AppCompatActivity() {
         val tvAnswerStreak = findViewById<TextView>(R.id.tvAnswerStreak)
         tvAnswerStreak.setText("")
 
-        //randomly select a question
+        //randomly select a number to generate a question
         val randomNumber = (0..3).random()
         val randomlySelectedCountry = randomlySelectQuestion(responseResult, resultList, tvQuestion2, randomNumber)
 
@@ -88,6 +88,7 @@ class GameMechanics : AppCompatActivity() {
         }
     }
 
+    //change button color to display the correct answer and incorrect answers
     private fun colorButtons(
         buttons: ArrayList<Button>,
         randomNumber: Int
@@ -101,6 +102,7 @@ class GameMechanics : AppCompatActivity() {
         }
     }
 
+    //set and display the question to the user
     private fun randomlySelectQuestion(
         responseResult: List<countryDataItem>,
         resultList: MutableList<Int>,
@@ -140,7 +142,7 @@ class GameMechanics : AppCompatActivity() {
         btnNext.setVisibility(View.INVISIBLE)
         btnRetry.setVisibility(View.VISIBLE)
         btnRetry.setOnClickListener {
-            displayQuestionAnswer(responseResult)
+            startTheGame(responseResult)
         }
     }
 
@@ -159,7 +161,7 @@ class GameMechanics : AppCompatActivity() {
         btnRetry.setVisibility(View.INVISIBLE)
         btnNext.setOnClickListener {
             btnNext.setVisibility(View.INVISIBLE)
-            displayQuestionAnswer(responseResult)
+            startTheGame(responseResult)
         }
     }
 

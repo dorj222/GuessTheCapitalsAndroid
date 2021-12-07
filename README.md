@@ -1,5 +1,5 @@
 # GuessTheCapitalsAndroid
-Android game where a player learn more about capital cities around the world.
+Android game where a player learns more about capital cities around the world.
 
 Description:
 
